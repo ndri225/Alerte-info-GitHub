@@ -1,0 +1,67 @@
+<div class="hero-header">
+    <div class="container-fluid">
+
+    </div>
+</div>
+
+<div class="hero-body">
+    <div class="row gx-3">
+        <div class="col-sm-4 col-6">
+            <div class="d-flex flex-column p-4 rounded-2 box-bdr-blue stats-tile">
+                <h4 class="mb-3 fw-bolder fs-5 d-flex justify-content-between">
+                    <span>{{ employees }}</span>
+                    <mat-icon>group</mat-icon>
+                </h4>
+                <div class="progress medium">
+                    <div class="progress-bar shade-blue" role="progressbar" [style.width]="employees +'%'" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <p class="m-0 mt-2 fs-5 fw-bolder">Total employé</p>
+            </div>
+        </div>
+        <div class="col-sm-4 col-6">
+            <div class="d-flex flex-column p-4 rounded-2 box-bdr-yellow stats-tile">
+                <h4 class="mb-3 fw-bolder fs-5 d-flex justify-content-between">
+                    <span>{{ employees_men }}</span>
+                    <mat-icon>group</mat-icon>
+                </h4>
+                <div class="progress medium">
+                    <div class="progress-bar shade-yellow" role="progressbar" [style.width]="employees_men +'%'" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <p class="m-0 mt-2 fs-5 fw-bolder">Hommes</p>
+            </div>
+        </div>
+        <div class="col-sm-4 col-6">
+            <div class="d-flex flex-column p-4 rounded-2 box-bdr-green stats-tile">
+                <h4 class="mb-3 fw-bolder fs-5 d-flex justify-content-between">
+                    <span>{{ employees_women }}</span>
+                    <mat-icon>group</mat-icon>
+                </h4>
+                <div class="progress medium">
+                    <div class="progress-bar shade-green" role="progressbar" [style.width]="employees_women +'%'" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <p class="m-0 mt-2 fs-5 fw-bolder">Femmes</p>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="row gx-3">
+
+        <div class="col-sm-12 col-6">
+            @if (chartOptions) {
+                <div class="d-flex flex-column p-4 rounded-2 box-bdr-yellow stats-tile">
+                    <apx-chart
+                        [series]="chartOptions.series"
+                        [chart]="chartOptions.chart"
+                        [xaxis]="chartOptions.xaxis"
+                        [fill]="chartOptions.fill"
+
+                        [colors]="chartOptions.colors"
+                    ></apx-chart>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,109 @@
+<mat-toolbar   class="mat-elevation-z8 default__toolbar">
+
+    @if (screenWidth < 840) {
+        <button  (click)="drawer.toggle()" mat-icon-button>
+            <mat-icon>menu</mat-icon>
+        </button>
+    }
+    <img src="assets/media/logoai.png" width="100" alt="">
+    <span class="default__spacer"></span>
+
+
+
+    <div class="d-flex">
+        <button [matMenuTriggerFor]="userDropleft" mat-button class="text-uppercase text-primary fw-bolder default__btn__lg">
+            <mat-icon>arrow_drop_down</mat-icon>
+            {{ user_name }}
+        </button>
+        <img class="img-radius rounded-circle" [src]="photo" width="40" height="40" alt="">
+    </div>
+
+    <mat-menu #userDropleft="matMenu" class="custom_menu_dialog">
+
+        <div class="customer_menu_modal">
+            <div class="customer_menu_modal_header p-3">
+                <h3 class="text-center fw-bolder">
+                    <img class="img-radius rounded-circle mb-3" [src]="photo" width="80" height="80" alt="">
+                    <p class="fw-bolder ">Bonjour {{ user_name }} !</p>
+                </h3>
+            </div>
+
+            <div class="customer_menu_modal_body">
+
+                <mat-divider></mat-divider>
+
+                <button mat-menu-item (click)="logOut(user_id)" >
+                    <mat-icon class="text-danger">logout</mat-icon>
+                    <span class="text-primary fw-bolder">Se deconnecter</span>
+                </button>
+            </div>
+        </div>
+    </mat-menu>
+</mat-toolbar>
+
+
+
+<mat-drawer-container class="default__drawer__conrainer " >
+    <mat-drawer class="default__drawer customer_bg_default" #drawer [opened]="screenWidth > 840" [mode]="(screenWidth > 840) ? 'side' : 'over'">
+        <mat-nav-list class="mt-4">
+            @for (item of sidebar_menu_list; track $index) {
+
+                <div class="ps-0 text-start" >
+                    <li class="text-danger ms-3 fw-bolder fs-6 mt-2"> {{ item.label  }}</li>
+                    <mat-list-item class="fw-bolder text-start customer-list-item">
+                        <button class="fw-bolder w-100 py-2 text-dark mat-elevation-z8"
+                        [routerLink]="item.router" routerLinkActive="active"
+                        [routerLinkActiveOptions]=" item.id == 1?{exact: true}:{exact: false} " mat-button >
+                            <mat-icon class="text-primary">{{ item.item_icon }}</mat-icon>
+                            <span class="text-start ">{{ item.item_name  }}</span>
+                        </button>
+                    </mat-list-item>
+                </div>
+            }
+        </mat-nav-list>
+    </mat-drawer>
+    <mat-drawer-content class="default__content">
+        <div class="page-wrapper">
+
+            <div class="main-container">
+
+                <div class="content-wrapper-scroll">
+                    <div class="main-header d-flex align-items-center justify-content-between position-relative">
+						<div class="d-flex align-items-center justify-content-center">
+							<div class="page-icon pe-3">
+
+                                @if (current_route != '/employees') {
+                                    <button  (click)="back()" mat-icon-button>
+                                        <mat-icon>keyboard_backspace</mat-icon>
+                                    </button>
+                                }
+                                @if (current_route == '/employees') {
+                                    <button [routerLink]="['/employees']" routerLinkActive="router-link-active"  mat-icon-button>
+                                        <mat-icon>home</mat-icon>
+                                    </button>
+                                }
+
+							</div>
+							<div class="page-title d-none d-md-block">
+								<h5>Bienvenue <strong class="text-danger fw-bolder">Espace employé</strong>, {{ user_name }}</h5>
+							</div>
+						</div>
+						<!-- Live updates start -->
+
+						<!-- Live updates end -->
+					</div>
+                    <div class="content-wrapper">
+                        <router-outlet></router-outlet>
+                    </div>
+
+                </div>
+
+                <div class="app-footer">
+					<span class="text-white">© ALERTE INFO <span class="text-danger">EMPLOYE</span> 2024 </span>
+				</div>
+
+            </div>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>
+

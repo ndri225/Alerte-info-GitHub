@@ -1,0 +1,95 @@
+<h1 mat-dialog-title>Ajouter un nouveau compte</h1>
+@if (is_loading == true) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}
+<div mat-dialog-content>
+    <div class="row mt-2">
+        <div class="col-md-6 col-lg-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Nom <code class="fs-4">*</code></mat-label>
+                <input [(ngModel)]="first_name" matInput placeholder="firstName">
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-6 col-lg-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Prénom <code class="fs-4">*</code></mat-label>
+                <input [(ngModel)]="last_name" matInput placeholder="lastName">
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-6 col-lg-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Adresse email <code
+                    class="fs-4">*</code></mat-label>
+                <input [(ngModel)]="email" type="email" matInput placeholder="Adresse email">
+            </mat-form-field>
+        </div>
+
+
+        <div class="col-md-6 col-lg-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Rôle <code
+                    class="fs-4">*</code></mat-label>
+                <mat-select [(value)]="selectedOption" (selectionChange)="selectRole($event)">
+                    <mat-option *ngFor="let item of list_roles" [value]="item.id">{{ item.role }}</mat-option>
+
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+
+        <div class="col-md-6 col-sm-6 col-lg-6">
+            <mat-form-field
+                appearance="outline">
+                <mat-label>Type de compte<code
+                        class="fs-4">*</code></mat-label>
+                <mat-select
+                    [(value)]="selectedTypeAccountsOption"
+                    (selectionChange)="selectTypeAccounts($event)">
+                    <mat-option *ngFor="let
+                        item_type_account of
+                        list_type_accounts"
+                        [value]="item_type_account.type_accounts">{{
+                            item_type_account.type }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+
+
+
+        @if (img_update == true) {
+            <div class="col-md-6 col-lg-6">
+                <input (change)="uploadFile($event)" class="form-control form-control-lg" id="formFileLg" type="file">
+                <label for="formFileLg" class="form-label">Choisir une image <code></code>  </label>
+            </div>
+        }
+
+        @if (img_update == false) {
+
+            <div class="d-flex justify-content-center my-2">
+                <img [src]="old_image" class="card-img-top rounded-circle"  style="width: 18%;" alt="...">
+                <button type="button" (click)="isUpdateImg()" mat-raised-button color="primary">
+                    <mat-icon class="mat-18 mr-1">edit</mat-icon>
+                    Modifier
+                </button>
+            </div>
+        }
+
+
+
+    </div>
+</div>
+<div mat-dialog-actions class="d-flex justify-content-between">
+    <button mat-raised-button color="primary" mat-dialog-close>Annuler</button>
+    @if (is_update == true) {
+        <button  mat-raised-button color="warn" (click)="updateUsers()">Modifier</button>
+    }
+    @if (is_update == false) {
+        <button  mat-raised-button color="warn" (click)="saveUsers()">Enregistrer</button>
+    }
+</div>
+
+
+

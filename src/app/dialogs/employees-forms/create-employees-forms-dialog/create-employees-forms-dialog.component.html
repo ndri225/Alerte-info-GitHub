@@ -1,0 +1,318 @@
+<div mat-dialog-content style="max-height: 95vh ">
+    <div class="row">
+        <div class="col-lg-12">
+            <!--EMPLOYEE INFORMATION SPACE-->
+            <mat-card  class="example-card rounded">
+                @if (is_loading == true) {
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                }
+
+                <mat-card-header class="mb-5 d-flex justify-content-start">
+                    <h1 class="text-primary fw-bolder">Veuillez renseigner vos informations personnelles</h1>
+                </mat-card-header>
+
+                <mat-card-content>
+                    <div class="row gx-3 ">
+
+                        <div class="col-md-4 col-sm-6 col-lg-4">
+                            <mat-form-field
+                                appearance="outline">
+                                <mat-label>Prénom <code
+                                        class="fs-4">*</code></mat-label>
+                                <input [(ngModel)]="first_name"
+                                    matInput
+                                    placeholder="Prénom">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6 col-lg-4">
+                            <mat-form-field
+                                appearance="outline">
+                                <mat-label>Nom de famille <code
+                                        class="fs-4">*</code></mat-label>
+                                <input [(ngModel)]="last_name"
+                                    matInput placeholder="Nom de famille">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-lg-4">
+                            <mat-form-field
+                                appearance="outline">
+                                <mat-label>Intitulé du dernier diplôme <code
+                                        class="fs-4">*</code></mat-label>
+                                <input  [(ngModel)]="diplome"
+                                    matInput
+                                    placeholder="Intitulé du dernier diplôme ">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-lg-4">
+                            <mat-form-field
+                                appearance="outline">
+                                <mat-label>Votre profession <code
+                                        class="fs-4">*</code></mat-label>
+                                <input  [(ngModel)]="profession"
+                                    matInput
+                                    placeholder="Votre profession">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6 col-lg-4">
+                            <mat-form-field
+                                appearance="outline">
+                                <mat-label>Genre<code
+                                        class="fs-4">*</code></mat-label>
+                                <mat-select
+                                    [(value)]="selectedGenreOption"
+                                    (selectionChange)="selectGenre($event)">
+                                    <mat-option *ngFor="let
+                                        item_genre of
+                                        list_genre"
+                                        [value]="item_genre.genre">{{
+                                        item_genre.genre }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6 col-lg-4">
+                            <mat-form-field
+                                appearance="outline">
+                                <mat-label>Adresse email <code
+                                        class="fs-4">*</code></mat-label>
+                                <input [(ngModel)]="adresse_email"
+                                    type="email" matInput
+                                    placeholder="Adresse email">
+                                    <mat-icon matSuffix>mail</mat-icon>
+                            </mat-form-field>
+                        </div>
+
+
+                        <div class="col-md-4 col-sm-6 col-lg-4">
+                            <mat-form-field
+                                appearance="outline">
+                                <mat-label>Numéro téléphone
+                                    <code class="fs-4">*</code></mat-label>
+                                <input [(ngModel)]="phone" type="tel"
+                                    matInput placeholder="Numéro téléphone">
+                                <mat-icon matSuffix>phone</mat-icon>
+                                <mat-hint align="start"><strong>Format exigé</strong> </mat-hint>
+                                <mat-hint align="end">Ex: +2250000000000</mat-hint>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6 col-lg-4">
+                            <mat-form-field
+                                appearance="outline">
+                                <mat-label>Date de naissance
+                                    <code class="fs-4">*</code></mat-label>
+                                <input
+                                    [(ngModel)]="date_naissance"
+                                    matInput
+                                    [matDatepicker]="pickerDateNaissance">
+                                <mat-datepicker-toggle matIconSuffix [for]="pickerDateNaissance"></mat-datepicker-toggle>
+                                <mat-datepicker #pickerDateNaissance></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6 col-lg-4">
+                            <mat-form-field
+                                appearance="outline">
+                                <mat-label>Lieu de naissance
+                                    <code class="fs-4">*</code></mat-label>
+                                <input
+                                    [(ngModel)]="lieu_naissance"
+                                    matInput placeholder="Lieu de naissance">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6 col-lg-4">
+                            <mat-form-field
+                                appearance="outline">
+                                <mat-label>Personne à contacter
+                                    <code class="fs-4">*</code></mat-label>
+                                <input
+                                    [(ngModel)]="personne_a_contacter"
+                                    matInput placeholder="Personne à contacter">
+                            </mat-form-field>
+                        </div>
+
+                     
+
+                        <div class="col-md-4 col-sm-6 col-lg-4">
+                            <mat-form-field
+                                appearance="outline">
+                                <mat-label>Numéro de la personne à contacter
+                                    <code class="fs-4">*</code></mat-label>
+                                <input [(ngModel)]="contact_personne_a_contacter" type="tel"
+                                    matInput placeholder="Numéro téléphone">
+                                <mat-icon matSuffix>phone</mat-icon>
+                                <mat-hint align="start"><strong>Format exigé</strong> </mat-hint>
+                                <mat-hint align="end">Ex: +2250000000000</mat-hint>
+                            </mat-form-field>
+                        </div>
+
+
+                        <div class="col-md-4 col-sm-6 col-lg-4">
+                            <mat-form-field
+                                appearance="outline">
+                                <mat-label>Lieu de résidence
+                                    <code class="fs-4">*</code></mat-label>
+                                <input [(ngModel)]="lieu_residence"
+                                    matInput placeholder="Lieu de résidence">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6 col-lg-4">
+                            <mat-form-field
+                                appearance="outline">
+                                <mat-label>Nationalité
+                                    <code class="fs-4">*</code></mat-label>
+                                <input [(ngModel)]="nationalite"
+                                    matInput placeholder="Nationalité">
+                            </mat-form-field>
+                        </div>
+
+
+
+                        <div class="col-md-4 col-sm-6 col-lg-4">
+                            <mat-form-field
+                                appearance="outline">
+                                <mat-label>Situation Matrimoniale<code
+                                        class="fs-4">*</code></mat-label>
+                                <mat-select
+                                    [(value)]="selectedSituationMatrimonialeOption"
+                                    (selectionChange)="selectSituationMatrimoniale($event)">
+                                    <mat-option *ngFor="let
+                                        item_situation of
+                                        list_situation_matrimoniale"
+                                        [value]="item_situation.situation_matrimoniale">{{
+                                            item_situation.situation_matrimoniale }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6 col-lg-4">
+                            <mat-form-field
+                                appearance="outline">
+                                <mat-label>Nom du conjoint
+                                    <code class="fs-4">*</code></mat-label>
+                                <input [(ngModel)]="conjoint_name"
+                                    matInput placeholder="Nom du conjoint">
+                            </mat-form-field>
+                        </div>
+
+                      
+
+                        <div class="col-md-4 col-sm-6 col-lg-4">
+                            <mat-form-field
+                                appearance="outline">
+                                <mat-label>Contact du conjoint
+                                    <code class="fs-4">*</code></mat-label>
+                                <input [(ngModel)]="contact_conjoint" type="tel"
+                                    matInput placeholder="Contact du conjoint">
+                                <mat-icon matSuffix>phone</mat-icon>
+                                <mat-hint align="start"><strong>Format exigé</strong> </mat-hint>
+                                <mat-hint align="end">Ex: +2250000000000</mat-hint>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6 col-lg-4">
+                            <mat-form-field
+                                appearance="outline">
+                                <mat-label>Nombre d'enfant à charge
+                                    <code class="fs-4">*</code></mat-label>
+                                <input type="number" [(ngModel)]="nombre_enfant_a_charge"
+                                    matInput placeholder="Nombre d'enfants à charge">
+                            </mat-form-field>
+                        </div>
+                     
+
+                        <div class="col-md-4 col-sm-6 col-lg-4">
+                            <mat-form-field
+                                appearance="outline">
+                                <mat-label>Nombre de personnes à charge
+                                    <code class="fs-4">*</code></mat-label>
+                                <input [(ngModel)]="personne_a_charge"
+                                    matInput placeholder="Nombre de personnes à charge">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6 col-lg-4">
+                            <mat-form-field
+                                appearance="outline">
+                                <mat-label>Antécédent medical
+                                    <code class="fs-4">*</code></mat-label>
+                                <input [(ngModel)]="antecedant_medicaux"
+                                    matInput placeholder="Antécédent medical">
+                            </mat-form-field>
+                        </div>
+                       
+                        <div class="col-md-4 col-sm-6 col-lg-4">
+                            <mat-form-field
+                                appearance="outline">
+                                <mat-label>Type de pièce<code
+                                        class="fs-4">*</code></mat-label>
+                                <mat-select
+                                    [(value)]="selectedPieceOption"
+                                    (selectionChange)="selectPiece($event)">
+                                    <mat-option *ngFor="let
+                                        item_piece of
+                                        list_piece"
+                                        [value]="item_piece.piece">{{
+                                            item_piece.piece }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6 col-lg-4">
+                            <mat-form-field
+                                appearance="outline">
+                                <mat-label>N° de la pièce
+                                    <code class="fs-4">*</code></mat-label>
+                                <input [(ngModel)]="piece_number"
+                                    matInput placeholder="N° de la Pièce ">
+                            </mat-form-field>
+                        </div>
+
+                        <!-- <div class="col-md-6 col-sm-6 col-lg-6">
+                            <mat-form-field
+                                appearance="outline">
+                                <mat-label>N° CNPS </mat-label>
+                                <input [(ngModel)]="cnps_number"
+                                    matInput placeholder="N° CNPS">
+                            </mat-form-field>
+                        </div> -->
+
+                        <div class="col-md-6 col-lg-6">
+
+                            <input (change)="uploadFile($event)"
+                                class="form-control
+                                form-control-lg" id="formFileLg"
+                                type="file">
+                            <label for="formFileLg"
+                                class="form-label text-danger fw-bolder"> <strong class="text-dark"> Photo d'identité </strong> (Obligatoire)
+                            </label>
+                        </div>
+
+                        <div class="mt-3 text-center">
+                            <button mat-fab extended  mat-dialog-close color="warn" class="me-3">
+                                <mat-icon>reply</mat-icon>
+                                Annuler
+                            </button>
+                            <button (click)="SaveEmployeInformation()" class=" fw-bolder" mat-fab extended color="primary">
+                                <mat-icon>save</mat-icon>
+                                Enregistrer
+                            </button>
+                        </div>
+
+
+                    </div>
+
+
+                </mat-card-content>
+
+
+            </mat-card>
+
+            <!--END EMPLOYEE INFORMATION SPACE-->
+        </div>
+    </div>
+</div>

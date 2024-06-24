@@ -1,0 +1,163 @@
+<div class="subscribe-header">
+    <img src="assets/images/bg.jpg" class="img-fluid w-100" alt="Admin &amp;
+        Dashboards">
+</div>
+
+
+<div class="subscriber-body">
+
+    <!-- Row start -->
+    <div class="row justify-content-center mt-5">
+        <div class="col-xl-10 col-lg-12">
+            <!-- Row start -->
+            <div class="row align-items-end">
+                <div class="col-auto">
+                    <img [src]="old_image" class="img-8xx img-fluid rounded-circle border border-primary border-4">
+                </div>
+
+
+            </div>
+            <!-- Row end -->
+        </div>
+    </div>
+    <!-- Row end -->
+    <div class="row justify-content-center mt-5">
+        <div class="col-xxl-12 col-sm-12 col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title fs-2">Information personnelle</div>
+                </div>
+                <div class="card-body">
+
+                    <ul class="list-group">
+                        <li class="fs-4 list-group-item d-flex justify-content-between align-items-center">
+                            Prénom
+                            <span class="badge shade-green rounded-pill">{{ first_name }}</span>
+                        </li>
+                        <li class="fs-4 list-group-item d-flex justify-content-between align-items-center">
+                            Nom de famille
+                            <span class="badge shade-green rounded-pill">{{ last_name }}</span>
+                        </li>
+                        <li class="fs-4 list-group-item d-flex justify-content-between align-items-center">
+                            Profession
+                            <span class="badge shade-green rounded-pill">{{ profession }}</span>
+                        </li>
+                        <li class="fs-4 list-group-item d-flex justify-content-between align-items-center">
+                            Intitulé du diplôme
+                            <span class="badge shade-green rounded-pill">{{ diplome }}</span>
+                        </li>
+
+                        <li class="fs-4 list-group-item d-flex justify-content-between align-items-center">
+                            Genre
+                            <span class="badge shade-green rounded-pill">{{ genre }}</span>
+                        </li>
+
+                        <li class="fs-4 list-group-item d-flex justify-content-between align-items-center">
+                            Adresse email
+                            <span class="badge shade-green rounded-pill">{{ adresse_email }}</span>
+                        </li>
+
+                        <li class="fs-4 list-group-item d-flex justify-content-between align-items-center">
+                            Numéro téléphone
+                            <span class="badge shade-green rounded-pill">{{ telephone  }}</span>
+                        </li>
+
+                        <li class="fs-4 list-group-item d-flex justify-content-between align-items-center">
+                            Date de naissance
+                            <span class="badge shade-green rounded-pill">{{ date_naissance | date: 'd MMMM yyyy ' }}</span>
+                        </li>
+
+                        <li class="fs-4 list-group-item d-flex justify-content-between align-items-center">
+                            Lieu de naissance
+                            <span class="badge shade-green rounded-pill">{{ lieu_naissance  }}</span>
+                        </li>
+
+                        <li class="fs-4 list-group-item d-flex justify-content-between align-items-center">
+                            Lieu de résidence
+                            <span class="badge shade-green rounded-pill">{{ lieu_residence  }}</span>
+                        </li>
+
+                        <li class="fs-4 list-group-item d-flex justify-content-between align-items-center">
+                            Nationalité
+                            <span class="badge shade-green rounded-pill">{{ nationalite  }}</span>
+                        </li>
+
+                        <li class="fs-4 list-group-item d-flex justify-content-between align-items-center">
+                            Situation Matrimoniale
+                            <span class="badge shade-green rounded-pill">{{ situation_matrimoniale  }}</span>
+                        </li>
+
+                        <li class="fs-4 list-group-item d-flex justify-content-between align-items-center">
+                            Nombre d'enfants à charge
+                            <span class="badge shade-green rounded-pill">{{ nombre_enfant_a_charge  }}</span>
+                        </li>
+
+                        <li class="fs-4 list-group-item d-flex justify-content-between align-items-center">
+                            Type de pièce
+                            <span class="badge shade-green rounded-pill">{{ type_piece  }}</span>
+                        </li>
+
+                        <li class="fs-4 list-group-item d-flex justify-content-between align-items-center">
+                            N° Pièce d'identité
+                            <span class="badge shade-green rounded-pill">{{ piece_number  }}</span>
+                        </li>
+
+                        <li class="fs-4 list-group-item d-flex justify-content-between align-items-center">
+                            N° CNPS
+                            <span class="badge shade-green rounded-pill">{{ cnps_number  }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-xxl-12 col-sm-12 col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title fs-2">Information professionnelle</div>
+                </div>
+                <div class="card-body">
+
+                    <ul class="list-group">
+
+                        <li class="fs-4 list-group-item d-flex justify-content-between align-items-center">
+                            Fonction
+                            <span class="badge shade-green rounded-pill">{{ fonction }}</span>
+                        </li>
+                        <li class="fs-4 list-group-item d-flex justify-content-between align-items-center">
+                            Service
+                            <span class="badge shade-green rounded-pill">{{ service }}</span>
+                        </li>
+
+                        <li class="fs-4 list-group-item d-flex justify-content-between align-items-center">
+                            Lieu de travail
+                            <span class="badge shade-green rounded-pill">{{ bureau }}</span>
+                        </li>
+
+                        <li class="fs-4 list-group-item d-flex justify-content-between align-items-center">
+                            Contrat
+                            <span class="badge shade-green rounded-pill">{{ contrats }}</span>
+                        </li>
+
+                        <li class="fs-4 list-group-item d-flex justify-content-between align-items-center">
+                            Date d'embauche
+                            <span class="badge shade-green rounded-pill">{{ date_embauche | date: 'd MMMM yyyy ' }}</span>
+                        </li>
+
+                        <li class="fs-4 list-group-item d-flex justify-content-between align-items-center">
+                            Catégorie professionnelle
+                            <span class="badge shade-green rounded-pill">{{ categorie_pro  }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ngx-spinner type = "ball-circus" size = "large" color = "#ef8f01" [fullScreen] = "true">
+    <p style="color: #fff; font-size: 1.2rem" > Chargement en cours... </p>
+</ngx-spinner>

@@ -1,0 +1,174 @@
+
+<div class="hero-header mb-3">
+    <div class="container-fluid">
+        <!-- Row start -->
+        <div class="row justify-content-center mt-5 mr-5">
+            <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+
+                <div class="text-center">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between mb-2">
+                            <div class="card-title text-yellow">
+                                <button mat-button class="text-red fw-bolder fs-5">
+                                    <mat-icon >settings</mat-icon>
+                                    Horaires de travail
+                                </button>
+                            </div>
+                            @if (is_updated == false && let_start == false) {
+                                <button (click)="isStarted()" mat-raised-button color="primary">
+                                    <mat-icon>start</mat-icon>
+                                    Démarer
+                                </button>
+                            }
+                            @if (is_updated == true && let_start == false) {
+                                <button (click)="isStartedTopUpdated()" mat-raised-button color="primary">
+                                    <mat-icon>edit_square</mat-icon>
+                                    Modifier
+                                </button>
+                            }
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-3 justify-content-center">
+                                <div class="col-2">
+                                    <p class="mb-3 fs-5 text-center fw-bolder">
+                                        Heure d'entrée normale:
+                                        <span class="fs-4 text-danger">{{ heure_entre }}</span>
+                                    </p>
+                                </div>
+                                <div class="col-2">
+                                    <p class="mb-3 fs-5 text-center fw-bolder">
+                                        Heure d'entrée tolérable:
+                                        <span class="fs-4 text-danger">{{ heure_tolerable }}</span>
+                                    </p>
+                                </div>
+                                <div class="col-2">
+                                    <p class="mb-3 fs-5  fw-bolder">
+                                        Heure de descente:
+                                        <span class="fs-4 text-danger">{{ heure_out }}</span>
+                                    </p>
+                                </div>
+
+                                <div class="col-2">
+                                    <p class="mb-3 fs-5  fw-bolder">
+                                        Heure pause déjeuner:
+                                        <span class="fs-4 text-danger">{{ break_time }}</span>
+                                    </p>
+                                </div>
+
+                                <div class="col-2">
+                                    <p class="mb-3 fs-5  fw-bolder">
+                                        Heure totale de travail:
+                                        <span class="fs-4 text-danger">{{ total_hour_of_work }}</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            @if (let_start == true) {
+                                <div  class="row mb-2">
+                                    <div class="col-lg-3 col-sm-6 col-12">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Heure d'entrée <code class="fs-4">*</code></mat-label>
+                                            <input [ngxMatTimepicker]="pickerInit"
+                                                [(ngModel)]="heure_initiale"
+                                                matInput
+                                                placeholder="00:00"
+                                                [format]="24"
+
+                                            >
+                                            <ngx-mat-timepicker #pickerInit></ngx-mat-timepicker>
+                                            <mat-icon matSuffix (click)="pickerInit.open()">
+                                                watch_later
+                                            </mat-icon>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-6 col-12">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Heure d'entrée tolérable <code class="fs-4">*</code></mat-label>
+                                            <input [ngxMatTimepicker]="pickerTolearble"
+                                                [(ngModel)]="heure_tolerance"
+                                                matInput
+                                                placeholder="00:00"
+                                                [format]="24"
+                                            >
+                                            <ngx-mat-timepicker #pickerTolearble></ngx-mat-timepicker>
+                                            <mat-icon matSuffix (click)="pickerTolearble.open()">
+                                                watch_later
+                                            </mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-6 col-12">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Nombre d'heure de pause <code class="fs-4">*</code></mat-label>
+                                            <input [ngxMatTimepicker]="pickerBreakTime"
+                                                [(ngModel)]="break_time"
+                                                matInput
+                                                placeholder="00:00"
+                                                [format]="24"
+                                            >
+                                            <ngx-mat-timepicker #pickerBreakTime></ngx-mat-timepicker>
+                                            <mat-icon matSuffix (click)="pickerBreakTime.open()">
+                                                watch_later
+                                            </mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-6 col-12">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Heure de descente <code class="fs-4">*</code></mat-label>
+                                            <input [ngxMatTimepicker]="pickerEndTime"
+                                                [(ngModel)]="heure_sortie"
+                                                matInput
+                                                placeholder="00:00"
+                                                [format]="24"
+                                            >
+                                            <ngx-mat-timepicker #pickerEndTime></ngx-mat-timepicker>
+                                            <mat-icon matSuffix (click)="pickerEndTime.open()">
+                                                watch_later
+                                            </mat-icon>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between">
+                                        @if (let_start == true) {
+                                            <button (click)="isCancelled()" mat-raised-button color="warn">Annuler</button>
+                                        }
+                                        @if (is_updated == false) {
+                                            <button (click)="saveConfig()" mat-raised-button color="primary">Enregistrer</button>
+                                        }
+                                        @if (is_updated == true && let_start == true) {
+                                            <button  (click)="updateConfig(hour_slug)" mat-raised-button color="primary">Modifier</button>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- Row end -->
+    </div>
+</div>
+
+
+<div class="hero-body">
+    <div class="container-fluid">
+        <!-- Row start -->
+        <div class="row mt-5 mr-5">
+            <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+
+
+            </div>
+
+
+        </div>
+        <!-- Row end -->
+    </div>
+</div>
+
+
+
+<ngx-spinner type = "ball-circus" size = "large" color = "#ef8f01" [fullScreen] = "true">
+    <p style="color: #fff; font-size: 1.2rem" > Chargement en cours... </p>
+</ngx-spinner>

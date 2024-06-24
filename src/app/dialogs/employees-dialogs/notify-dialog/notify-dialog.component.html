@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>Vous allez envoyer une notification à l'employé
+    <span class="text-primary fw-bolder">#{{ employe_matricule }}</span> pour le rejet de son document:
+    <span class="text-red fw-bolder"># {{ keyword }}</span>
+    . </h1>
+<div mat-dialog-content>
+    <div class="row mt-2">
+        <div class="col-md-12 col-lg-12">
+            <mat-form-field appearance="outline">
+                <mat-label>Votre commentaire</mat-label>
+                <textarea cols="3" matInput [(ngModel)]="notification_data" placeholder="Votre commentaire"></textarea>
+            </mat-form-field>
+        </div>
+
+    </div>
+</div>
+<div mat-dialog-actions class="d-flex justify-content-between">
+    <button mat-fab extended color="primary" mat-dialog-close>
+        <mat-icon>reply</mat-icon>
+        Annuler
+    </button>
+    <button  mat-fab extended color="primary" (click)="sendNotification()">
+        <mat-icon>update</mat-icon>
+        Modifier
+    </button>
+
+</div>
+
+
+

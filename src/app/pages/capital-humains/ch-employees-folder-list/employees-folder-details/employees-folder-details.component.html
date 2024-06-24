@@ -1,0 +1,279 @@
+<div class="hero-header">
+    <div class="container-fluid">
+        <!-- Row start -->
+        <div class="row justify-content-center">
+            <div class="col-xl-12 col-md-8 col-sm-9 col-10">
+
+                <div class="text-center">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title text-yellow">
+                                <button mat-button class="text-red fw-bolder fs-5">
+                                    <mat-icon >notifications</mat-icon>
+                                    A votre attention!
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p class="mb-2 fw-bolder">
+                                Liste des documents à fornir <br>
+
+                            </p>
+                            <div class="row mb-3">
+                                <div class="col-4">
+                                    <ul class="list-group list-group-numbered text-start">
+                                        <li class="list-group-item">
+                                            Diplômes et certificat(s) de formation
+                                        </li>
+                                        <li class="list-group-item">
+                                            1 Photocopie de votre pièce d’identité
+                                        </li>
+                                        <li class="list-group-item">
+                                            1 Extrait du casier judiciaire
+                                        </li>
+                                        <li class="list-group-item">
+                                            1 Certificat de résidence
+                                        </li>
+
+                                    </ul>
+                                </div>
+                                <div class="col-4">
+                                    <ul class="list-group list-group-numbered text-start">
+                                        <li class="list-group-item">
+                                            1 Extrait d’acte de mariage
+                                        </li>
+                                        <li class="list-group-item">
+                                            1 Photocopie de l’extrait d’acte de naissance du conjoint et de chaque enfant
+                                        </li>
+                                        <li class="list-group-item">
+                                            2 Photos d’identité du conjoint et de chaque enfant
+                                        </li>
+
+                                    </ul>
+                                </div>
+                                <div class="col-4">
+                                    <ul class="list-group list-group-numbered text-start">
+
+                                        <li class="list-group-item">
+                                            1 Certificat de travail
+                                        </li>
+                                        <li class="list-group-item">
+                                            1 Curriculum Vitae
+                                        </li>
+                                        <li class="list-group-item">
+                                            1 Relevé d’Identité Bancaire (RIB)
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            @if (list_file_lenght != 0) {
+
+                                <div class="row" >
+                                    @if (decision_validation == 'is_not_validate_all') {
+                                        <div class="col-12">
+                                            <div class="alert box-bdr-red alert-dismissible fade show text-red fw-bolder" role="alert">
+                                                <b class="fs-5">Action à faire ! </b> <span>Vous devez donner votre approbation aux documents fournirent sous-dessous !</span>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        </div>
+                                    }
+                                    @if (decision_validation == 'is_validate_all') {
+
+                                        <div class="col-12" >
+                                            <div class="alert box-bdr-green alert-dismissible fade show text-green fw-bolder" role="alert">
+                                                <b class="fs-5">Félicitation!</b> Vous avez approuver les documents fournirent !
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- Row end -->
+        @if (add_file == true) {
+
+            <div  class="row gx-3 justify-content-center">
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Libellé du fichier <code class="fs-4">*</code></mat-label>
+                        <input [(ngModel)]="libelle_fichier" matInput placeholder="Libellé du fichier">
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+
+                    <input (change)="uploadFile($event)"
+                        class="form-control
+                        form-control-lg" id="formFileLg"
+                        type="file">
+                    <label for="formFileLg"
+                        class="form-label text-danger">Joindre un fichier
+                    </label>
+                </div>
+
+                <div class="text-center">
+
+                    <button (click)="openDossiersDialog()" mat-raised-button color="primary" class="text-uppercase default__btn__lg">
+                        <mat-icon >add</mat-icon>
+                        Enregistrer dans le dossier
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+<div class="hero-body">
+    <div class="row mt-5 mr-5">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <mat-card class="mat-elevation-z8">
+                <mat-card-header class="d-flex justify-content-between">
+                    <mat-card-title>
+                        <button mat-button class="fw-bolder default__btn__lg text-dark">
+                            <mat-icon >list</mat-icon>
+                            Liste des documents
+                        </button>
+                        <button (click)="openDossiersDialog()" mat-raised-button color="primary" class="text-uppercase default__btn__lg">
+                            <mat-icon >add</mat-icon>
+                            Nouveau
+                        </button>
+                    </mat-card-title>
+
+                </mat-card-header>
+                <mat-card-content>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped mt-3 align-middle">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">#Id</th>
+                                    <th class="text-center">Libellé du dossier</th>
+                                    <th class="text-center">Propriétaire</th>
+                                    <th class="text-center">Emplacement</th>
+                                    <th class="text-center">Date de création</th>
+                                    <th class="text-center">Date de modification</th>
+                                    <th class="text-center">Statut</th>
+                                    <th class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @for (item of list_files | paginate: { itemsPerPage: 10, currentPage: p } ; track $index) {
+
+                                    <tr>
+                                        <td class="text-center">{{ $index + 1 }}</td>
+
+                                        <td class="text-center">
+                                            <a target="_blank" [href]="item.file_url" >
+                                                <div class="d-flex text-start">
+                                                    <mat-icon class="me-3 text-primary">description</mat-icon>
+                                                    <p class="m-0 fw-bolder text-uppercase fs-6">{{ item.libelle_file }}</p>
+                                                </div>
+                                            </a>
+                                        </td>
+
+                                        <td class="text-center">
+                                            <p class="m-b-0 fw-bolder fs-6">{{ item.first_name  + ' ' + item.last_name}} </p>
+                                        </td>
+
+                                        <td class="text-center">
+                                            <div class="d-flex justify-content-center">
+                                                <mat-icon class="me-3 text-primary">folder</mat-icon>
+                                                <p class="m-0 fw-bolder fs-6">{{ item.libelle_dossiers }}</p>
+                                            </div>
+                                        </td>
+
+                                        <td class="text-center fw-bolder fs-6 text-primary">{{ item.created_at | transformDate: " d MMMM YYYY " }}</td>
+                                        <td class="text-center fw-bolder fs-6 text-primary">{{ item.updated_at | transformDate: " d MMMM YYYY " }}</td>
+
+                                        <td class="text-center">
+
+                                            @if (item.status_on == 1) {
+                                                <button matTooltip="Document validé"  mat-icon-button>
+                                                    <mat-icon class="text-primary">verified</mat-icon>
+                                                </button>
+                                            }
+                                            @if (item.status_off == 1) {
+                                                <button matTooltip="Document rejeté" mat-icon-button>
+                                                    <mat-icon class="text-red">verified</mat-icon>
+                                                </button>
+                                            }
+                                            @if (item.status_on == 0 && item.status_off == 0) {
+                                                <button matTooltip="En entente de validation du document" mat-icon-button>
+                                                    <mat-icon class="text-blue">pending</mat-icon>
+                                                </button>
+                                            }
+
+                                        </td>
+
+
+                                        <td class="text-center">
+
+                                            <button mat-mini-fab color="primary"
+                                                [matMenuTriggerFor]="beforeMenu">
+                                                <mat-icon>more_vert</mat-icon>
+                                            </button>
+                                            <mat-menu #beforeMenu="matMenu"
+                                                xPosition="before">
+                                                <a target="_blank" [href]="item.file_url" mat-menu-item>
+                                                    <mat-icon>visibility</mat-icon>
+                                                    Ouvrir
+                                                </a>
+                                                <button (click)="confirmedOrRejetedFile('confirmed',item)" [disabled]="item.status_on == 1 && item.status_off == 0" mat-menu-item>
+                                                    <mat-icon class="text-primary">check_circle</mat-icon>
+                                                    Approuver
+                                                </button>
+
+                                                <button (click)="confirmedOrRejetedFile('rejected',item)"  [disabled]="item.status_on == 0 && item.status_off == 1" mat-menu-item>
+                                                    <mat-icon class="text-red">check_circle</mat-icon>
+                                                    Rejeter
+                                                </button>
+                                                <button (click)="updateDossiersFile(item)" mat-menu-item>
+                                                    <mat-icon>border_color</mat-icon>
+                                                    Modifier
+                                                </button>
+                                                <button (click)="openDeleDialog(item.slug)" mat-menu-item>
+                                                    <mat-icon>delete</mat-icon>
+                                                    Supprimer
+                                                </button>
+                                            </mat-menu>
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+
+                        <div class="mt-4 text-center">
+                            <pagination-controls
+                                (pageChange)="p = $event"
+                                previousLabel="Précédent"
+                                nextLabel="Suivant"
+                            >
+                            </pagination-controls>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+
+
+</div>
+
+
+<ngx-spinner type="ball-circus" size="large" color="#ef8f01"
+    [fullScreen]="true">
+    <p style="color: #fff; font-size: 1.2rem"> Chargement en cours... </p>
+</ngx-spinner>
+
+

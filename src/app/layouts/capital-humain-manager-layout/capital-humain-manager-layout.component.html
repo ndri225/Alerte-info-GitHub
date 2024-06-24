@@ -1,0 +1,140 @@
+<mat-toolbar   class="mat-elevation-z8 default__toolbar">
+
+    @if (screenWidth < 840) {
+        <button  (click)="drawer.toggle()" mat-icon-button>
+            <mat-icon>menu</mat-icon>
+        </button>
+    }
+    <a routerLink="/">
+        <img src="assets/media/logoai.png" width="100" alt="">
+    </a>
+    <span class="default__spacer"></span>
+
+
+
+
+
+
+
+
+    <div class="d-flex">
+        <button [matMenuTriggerFor]="userDropleft" mat-button class="text-uppercase text-primary default__btn__lg">
+            <mat-icon>arrow_drop_down</mat-icon>
+            {{ user_name }}
+        </button>
+        <img class="img-radius rounded-circle" [src]="photo" width="40" height="40" alt="">
+    </div>
+
+    <mat-menu #userDropleft="matMenu" class="custom_menu_dialog">
+
+        <div class="customer_menu_modal">
+            <div class="customer_menu_modal_header p-3">
+                <h3 class="text-center fw-bolder">
+                    <img class="img-radius rounded-circle mb-3" [src]="photo" width="80" height="80" alt="">
+                    <p class="fw-bolder ">Bonjour {{ user_name }} !</p>
+                </h3>
+            </div>
+
+            <div class="customer_menu_modal_body">
+
+                <mat-divider></mat-divider>
+
+                <button mat-menu-item (click)="logOut(user_id)" >
+                    <mat-icon class="text-danger">logout</mat-icon>
+                    <span class="text-primary fw-bolder">Se déconnecter</span>
+                </button>
+            </div>
+        </div>
+    </mat-menu>
+</mat-toolbar>
+
+
+
+<mat-drawer-container class="default__drawer__conrainer " >
+    <mat-drawer class="default__drawer customer_bg-dark" #drawer [opened]="screenWidth > 840" [mode]="(screenWidth > 840) ? 'side' : 'over'">
+        <mat-nav-list class="mt-4">
+
+            @for (item of sidebar_menu_list; track $index) {
+                <div class="ps-0" >
+                    @if (item.label){
+                        <button disabled  mat-button
+                            class="
+                                my-2 py-2 w-100
+                                mat-elevation-z8
+                                text-white
+                                justify-content-start
+                                fw-bolder text-start
+                                text-uppercase mt-2">
+                            <mat-icon class="text-danger">category</mat-icon>
+                            <span class="text-start">{{ item.label  }}</span>
+                        </button>
+                    }
+
+
+
+                    <mat-list-item class="fw-bolder text-start">
+                        <button class="fw-bolder text-white w-100 py-2  mat-elevation-z8"
+                        [routerLink]="item.router" routerLinkActive="active"
+                        [routerLinkActiveOptions]=" item.id == 1?{exact: true}:{exact: false} " mat-button >
+                            <mat-icon >{{ item.item_icon }}</mat-icon>
+                            {{ item.item_name  }}
+                        </button>
+                    </mat-list-item>
+                </div>
+            }
+
+        </mat-nav-list>
+    </mat-drawer>
+    <mat-drawer-content class="default__content">
+        <div class="page-wrapper">
+
+            <div class="main-container">
+
+                <div class="content-wrapper-scroll">
+                    <div class="main-header d-flex align-items-center justify-content-between position-relative">
+						<div class="d-flex align-items-center justify-content-center">
+							<div class="page-icon pe-3">
+                                @if (current_route != '/capital-humain') {
+                                    <button  (click)="back()" mat-icon-button>
+                                        <mat-icon>keyboard_backspace</mat-icon>
+                                    </button>
+                                }
+                                @if (current_route == '/capital-humain') {
+                                    <button  [routerLink]="['/capital-humain']" routerLinkActive="router-link-active"  mat-icon-button>
+                                        <mat-icon>home</mat-icon>
+                                    </button>
+                                }
+							</div>
+							<div class="page-title d-none d-md-block">
+								<h5>Bienvenue sur l<strong class="text-danger fw-bolder">'espace du capital humain,  </strong> <strong>{{ user_name }}</strong> </h5>
+							</div>
+						</div>
+                        <div class="page-title d-none d-md-block">
+                            <h5>Code d'autorisation:
+                                <strong class="text-danger fs-4 fw-bolder">{{ code_data }}</strong>,
+                                <button (click)="refreshCodeAuthorization(code_slug)" matTooltip="Rafraîchir le code" mat-mini-fab color="primary" >
+                                    <mat-icon>restart_alt</mat-icon>
+                                </button>
+                            </h5>
+                        </div>
+						<!-- Live updates start -->
+
+						<!-- Live updates end -->
+					</div>
+                    <div class="content-wrapper">
+                        <router-outlet></router-outlet>
+                    </div>
+
+
+
+                </div>
+
+                <div class="app-footer">
+					<span class="text-white">© ALERTE INFO <span class="text-danger">RH</span> 2024 </span>
+				</div>
+
+            </div>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>
+

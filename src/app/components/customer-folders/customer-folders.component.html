@@ -1,0 +1,249 @@
+
+<div class="hero-header">
+    <div class="container-fluid">
+        <!-- Row start -->
+        <div class="row justify-content-center">
+            <div class="col-xl-12 col-md-8 col-sm-9 col-10">
+
+                @if (folder_employe_matricule == '' ) {
+                    <div  class="text-center">
+                        <img src="assets/media/folder.svg" width="300" alt="logo oipi" class="img-fluid mb-2">
+
+                        <p class="mb-4 fw-bolder fs-5 text-primary">Aucun dossier n'est disponible pour vous.
+                            <button (click)="openDossiersDialog()" mat-raised-button>Créer mon dossier</button>
+                        </p>
+                    </div>
+                }
+
+                @if (folder_employe_matricule != '' ) {
+                    <div class="text-center">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title text-yellow">
+                                    <button mat-button class="text-red fw-bolder fs-5">
+                                        <mat-icon >notifications</mat-icon>
+                                        A votre attention!
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-2 fw-bolder">
+                                    Liste des documents à fornir <br>
+
+                                </p>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <ul class="list-group list-group-numbered text-start">
+                                            <li class="list-group-item">
+                                                Diplômes et certificat(s) de formation
+                                            </li>
+                                            <li class="list-group-item">
+                                                1 Photocopie de votre pièce d’identité
+                                            </li>
+                                            <li class="list-group-item">
+                                                1 Extrait du casier judiciaire
+                                            </li>
+                                            <li class="list-group-item">
+                                                1 Certificat de résidence
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                    <div class="col-4">
+                                        <ul class="list-group list-group-numbered text-start">
+                                            <li class="list-group-item">
+                                                1 Extrait d’acte de mariage
+                                            </li>
+                                            <li class="list-group-item">
+                                                1 Photocopie de l’extrait d’acte de naissance du conjoint et de chaque enfant
+                                            </li>
+                                            <li class="list-group-item">
+                                                2 Photos d’identité du conjoint et de chaque enfant
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                    <div class="col-4">
+                                        <ul class="list-group list-group-numbered text-start">
+
+                                            <li class="list-group-item">
+                                                1 Certificat de travail
+                                            </li>
+                                            <li class="list-group-item">
+                                                1 Curriculum Vitae
+                                            </li>
+                                            <li class="list-group-item">
+                                                1 Relevé d’Identité Bancaire (RIB)
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                }
+            </div>
+        </div>
+        <!-- Row end -->
+
+    </div>
+</div>
+
+
+
+
+<div class="hero-body">
+    <div class="container-fluid">
+        <!-- Row start -->
+        <div class="row gx-3">
+            <div class="col-xxl-12">
+
+                @if (folder_employe_matricule != '' ) {
+                    <div class="card" >
+                        <div class="card-header d-flex justify-content-between">
+
+                            <div class="card-title fw-bolder fs-5">
+                                <div class="d-flex align-items-center">
+                                    <mat-icon class="me-3 text-primary">folder</mat-icon>
+                                    <p class="m-0 me-2 fw-bolder fs-6">{{ libelle_dossiers }}</p>
+                                    <button (click)="updateDossiersDialog()" mat-mini-fab color="primary" >
+                                        <mat-icon>edit</mat-icon>
+                                    </button>
+                                </div>
+
+                            </div>
+
+                            <button (click)="openDossiersFeleDialog()" mat-raised-button color="primary" >
+                                Nouveau document
+                            </button>
+
+
+                        </div>
+
+                        <div class="card-body">
+                            @if (folder_file.length == 0 ) {
+                                <div  class="text-center">
+                                    <img src="assets/media/file.svg" width="300" alt="logo oipi" class="img-fluid mb-2">
+                                    <p class="mb-4 fw-bolder fs-5 text-primary">Votre dossier est vide.
+                                        <button (click)="openDossiersFeleDialog()" mat-raised-button>Ajouter mon document</button>
+                                    </p>
+                                </div>
+                            }
+
+                            @if (folder_file.length > 0 ) {
+                                <div  class="table-responsive">
+                                    <table class="table table-striped mt-3 align-middle">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">#Id</th>
+                                                <th class="text-center">Nom du document</th>
+                                                <th class="text-center">Propriétaire</th>
+                                                <th class="text-center">Emplacement</th>
+                                                <th class="text-center">Statut</th>
+                                                <th class="text-center">Date de création</th>
+                                                <th class="text-center">Date de modification</th>
+                                                <th class="text-center">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (item of folder_file | paginate: { itemsPerPage: 10, currentPage: p } ; track $index) {
+
+                                                <tr>
+                                                    <td class="text-center">{{ $index + 1 }}</td>
+
+                                                    <td class="text-center">
+                                                        <a target="_blank" [href]="item.file_url" >
+                                                            <div class="d-flex text-start">
+                                                                <mat-icon class="me-3 text-primary">description</mat-icon>
+                                                                <p class="m-0 fw-bolder fs-6">{{ item.libelle_file }}</p>
+                                                            </div>
+                                                        </a>
+                                                    </td>
+
+                                                    <td class="text-center">
+                                                        <p class="m-b-0 fw-bolder fs-6">{{ item.first_name  + ' ' + item.last_name}} </p>
+                                                    </td>
+
+                                                    <td class="text-center">
+                                                        <div class="d-flex justify-content-center">
+                                                            <mat-icon class="me-3 text-primary">folder</mat-icon>
+                                                            <p class="m-0 fw-bolder fs-6">{{ item.libelle_dossiers }}</p>
+                                                        </div>
+                                                    </td>
+
+                                                    <td class="text-center">
+                                                        @if (item.status_on == 1) {
+                                                            <button matTooltip="Approuvé"  mat-icon-button>
+                                                                <mat-icon class="text-primary">check_circle</mat-icon>
+                                                            </button>
+                                                        }
+                                                        @if (item.status_off == 1) {
+                                                            <button matTooltip="Rejeté" mat-icon-button>
+                                                                <mat-icon class="text-red">check_circle</mat-icon>
+                                                            </button>
+                                                        }
+                                                        @if (item.status_on == 0 && item.status_off == 0) {
+                                                            <button matTooltip="Aucune action" mat-icon-button>
+                                                                <mat-icon class="text-danger">check_circle</mat-icon>
+                                                            </button>
+                                                        }
+
+                                                    </td>
+
+                                                    <td class="text-center fw-bolder fs-6 text-primary">{{ item.created_at | transformDate: " d MMMM YYYY " }}</td>
+                                                    <td class="text-center fw-bolder fs-6 text-primary">{{ item.updated_at | transformDate: " d MMMM YYYY " }}</td>
+                                                    <td class="text-center">
+
+                                                        <button mat-mini-fab color="primary"
+                                                            [matMenuTriggerFor]="beforeMenu">
+                                                            <mat-icon>more_vert</mat-icon>
+                                                        </button>
+                                                        <mat-menu #beforeMenu="matMenu"
+                                                            xPosition="before">
+                                                            <a target="_blank" [href]="item.file_url" mat-menu-item>
+                                                                <mat-icon>visibility</mat-icon>
+                                                                Ouvrir
+                                                            </a>
+                                                            <button (click)="updateDossiersFile(item)" mat-menu-item>
+                                                                <mat-icon>border_color</mat-icon>
+                                                                Modifier
+                                                            </button>
+                                                            <button (click)="openDeleFoldersFileDialog(item.slug)" mat-menu-item>
+                                                                <mat-icon>delete</mat-icon>
+                                                                Supprimer
+                                                            </button>
+                                                        </mat-menu>
+
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+
+                                    </table>
+
+                                    <div class="mt-4 text-center">
+                                        <pagination-controls
+                                            (pageChange)="p = $event"
+                                            previousLabel="Précédent"
+                                            nextLabel="Suivant"
+                                        >
+                                        </pagination-controls>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+        <!-- Row end -->
+    </div>
+</div>
+
+<ngx-spinner type = "ball-circus" size = "large" color = "#ef8f01" [fullScreen] = "true">
+    <p style="color: #fff; font-size: 1.2rem" > Chargement en cours... </p>
+</ngx-spinner>

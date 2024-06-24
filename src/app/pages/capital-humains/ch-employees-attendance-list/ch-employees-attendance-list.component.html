@@ -1,0 +1,297 @@
+
+<div class="hero-header">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between">
+            <p class="fw-bolder fs-5">Effectuer une recherche dans la liste</p>
+
+            <button mat-mini-fab color="primary"
+                [matMenuTriggerFor]="beforeMenu">
+                <mat-icon>print</mat-icon>
+            </button>
+            <mat-menu #beforeMenu="matMenu"
+                xPosition="before">
+
+                <button mat-menu-item>
+                    <mat-icon>border_color</mat-icon>
+                    PDF
+                </button>
+                <button mat-menu-item>
+                    <mat-icon>delete</mat-icon>
+                    CSV
+                </button>
+            </mat-menu>
+
+        </div>
+
+        <hr>
+        <div class="row">
+
+            <div class="col-lg-3">
+                <mat-form-field appearance="outline">
+                    <mat-label class="fw-bolder">Date début</mat-label>
+                    <input [(ngModel)]="date_start" matInput
+                        [matDatepicker]="Date_start"
+                        placeholder="00/00/0000">
+                    <mat-datepicker-toggle matIconSuffix
+                        [for]="Date_start"></mat-datepicker-toggle>
+                    <mat-datepicker #Date_start></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-lg-3">
+                <mat-form-field appearance="outline">
+                    <mat-label class="fw-bolder">Date fin</mat-label>
+                    <input [(ngModel)]="date_end" matInput
+                        [matDatepicker]="Date_end"
+                        placeholder="00/00/0000">
+                    <mat-datepicker-toggle matIconSuffix
+                        [for]="Date_end"></mat-datepicker-toggle>
+                    <mat-datepicker #Date_end></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+            <div class="col-lg-3">
+                <mat-form-field appearance="outline">
+                    <mat-label class="fw-bolder">Choisissez un
+                        employé</mat-label>
+                    <mat-select (selectionChange)="onChangeEmployes($event)">
+                        @for (items_employe of list_employe; track $index) {
+
+                            <mat-option
+                                [value]="items_employe.matricule">
+                                {{ items_employe.first_name + " "+
+                                items_employe.last_name + " "+ "("+
+                                items_employe.matricule +")" }}
+                            </mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-lg-3">
+                <button (click)="searchInAttendance()" mat-raised-button
+                    color="primary" class="fw-bolder default__btn__lg w-100">
+                    <mat-icon>search</mat-icon>
+                    Rechercher
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="hero-body">
+
+    <div class="row mt-5 mr-5">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between mb-2">
+                    <div class="card-title text-yellow">
+                        <button mat-button class="text-red fw-bolder fs-5">
+                            <mat-icon>list</mat-icon>
+                            Liste des présences
+                        </button>
+                    </div>
+                    <button [routerLink]="['/ch.create-pointing']"
+                        mat-raised-button class="text-red fw-bolder ">
+                        <mat-icon>add</mat-icon>
+                        Nouveau pointage
+                    </button>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped mt-3">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">#Id</th>
+                                            <th class="text-center">Employé</th>
+                                            <th class="text-center">Date du
+                                                jour</th>
+                                            <th class="text-center">Heure
+                                                d'arrivée</th>
+                                            <th class="text-center">Pause
+                                                déjeuner</th>
+                                            <th class="text-center">Heure de
+                                                descente</th>
+                                            <th class="text-center">Heure
+                                                totale</th>
+                                            <th
+                                                class="text-center">Supplementaire</th>
+                                            <th class="text-center">Statut</th>
+                                            <th class="text-center">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @for (item of list_pointage | paginate: { itemsPerPage: 10, currentPage: p } ; track $index) {
+
+                                            <tr>
+                                                <td class="text-center">{{ $index + 1
+                                                    }}</td>
+
+                                                <td class="text-center">
+                                                    <div
+                                                        class="d-flex align-items-center">
+
+                                                        <img [src]="item.photo"
+                                                            class="img-2x rounded-5 me-3"
+                                                            alt="Employe photo">
+
+                                                        <div>
+
+                                                            <p
+                                                                class="m-0 fw-600 text-primary fw-bolder">
+                                                                {{ item.first_name +
+                                                                " " + item.last_name
+                                                                }}
+                                                            </p>
+                                                            <p
+                                                                class="m-0 fw-600 text-primary fw-bolder">
+                                                                {{
+                                                                item.employe_matricule
+                                                                }}
+                                                            </p>
+
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <td class="text-center">
+                                                    <div
+                                                        class="d-flex align-items-center">
+
+                                                        <mat-icon
+                                                            class="me-2">calendar_month</mat-icon>
+
+                                                        <div>
+
+                                                            <p
+                                                                class="m-0 fw-bolder">
+                                                                {{ item.date_started
+                                                                | transformDate:
+                                                                " d MMMM YYYY " }}
+
+                                                            </p>
+
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <td class="text-center">
+                                                    <div
+                                                        class="d-flex align-items-center">
+
+                                                        <mat-icon
+                                                            [class]="item.start_time > item.tolerable_hour?'me-2 text-red':'me-2'">timer</mat-icon>
+                                                        <p
+                                                            [class]="item.start_time > item.tolerable_hour?'m-0 fw-bolder text-red':'m-0 fw-bolder'">
+                                                            {{ item.start_time }}
+                                                        </p>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <p class="m-b-0 fw-bolder">{{
+                                                        item.break_time }} </p>
+                                                </td>
+
+                                                <td class="text-center">
+                                                    <div
+                                                        class="d-flex align-items-center">
+                                                        <mat-icon
+                                                            class="me-2">timer</mat-icon>
+                                                        <p class="m-0 fw-bolder">
+                                                            {{ item.end_time }}
+                                                        </p>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <p
+                                                        class="m-b-0 text-primary fw-bolder">{{
+                                                        item.total_hour_of_work }}
+                                                    </p>
+                                                </td>
+                                                <td class="text-center">
+                                                    <p class="m-b-0 fw-bolder">{{
+                                                        item.overtime }} </p>
+                                                </td>
+                                                <td class="text-center">
+                                                    @if (item.start_time ==
+                                                    '00:00:00' && item.end_time ==
+                                                    '00:00:00') {
+                                                    <span
+                                                        class=" badge rounded-pill shade-light-red  fw-bolder fs-6">
+                                                        Absent
+                                                    </span>
+                                                    }
+                                                    @if (item.start_time !=
+                                                    '00:00:00' && item.end_time !=
+                                                    '00:00:00') {
+                                                    <span
+                                                        class=" badge rounded-pill shade-light-green  fw-bolder fs-6">
+                                                        Présent
+                                                    </span>
+                                                    }
+                                                </td>
+
+                                                <td class="text-center">
+
+                                                    <button mat-mini-fab
+                                                        color="primary"
+                                                        [matMenuTriggerFor]="beforeMenu">
+                                                        <mat-icon>more_vert</mat-icon>
+                                                    </button>
+                                                    <mat-menu #beforeMenu="matMenu"
+                                                        xPosition="before">
+
+
+                                                        <button
+                                                            (click)="openDeleDialog(item.slug)"
+                                                            mat-menu-item>
+                                                            <mat-icon>delete</mat-icon>
+                                                            Supprimer
+                                                        </button>
+                                                    </mat-menu>
+
+                                                </td>
+                                            </tr>
+                                        }
+
+                                        @if (list_pointage.length == 0) {
+                                        <tr>
+                                            <td colspan="10"
+                                                class="text-center">
+
+                                                <h1 class="text-center">Aucune
+                                                    présence pour le moment</h1>
+                                            </td>
+                                        </tr>
+                                        }
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+                        </div>
+                        <div class="mt-4 text-center">
+                            <pagination-controls
+                                (pageChange)="p = $event"
+                                previousLabel="Précédent"
+                                nextLabel="Suivant"
+                            >
+                            </pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<ngx-spinner type="ball-circus" size="large" color="#ef8f01"
+    [fullScreen]="true">
+    <p style="color: #fff; font-size: 1.2rem"> Chargement en cours... </p>
+</ngx-spinner>

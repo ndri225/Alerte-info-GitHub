@@ -1,0 +1,334 @@
+<div class="hero-header">
+    <div class="container-fluid">
+        <!-- Row start -->
+        <div class="row gx-3">
+            <div class="col-xxl-12">
+
+            </div>
+        </div>
+        <!-- Row end -->
+    </div>
+</div>
+
+<div class="hero-body">
+    <div class="row gx-3">
+        <div class="col-xxl-12 col-sm-12 col-12">
+            <div class="card">
+
+                <div class="card-header d-flex justify-content-between mb-3">
+                    <h1 class="text-start text-white">Liste des comptes utilisateurs</h1>
+                    <button (click)="openUsersDialog()"
+                        mat-fab extended
+                        color="primary">
+                        <mat-icon>add</mat-icon>
+                        Ajouter un compte
+                    </button>
+                </div>
+                <div class="card-body">
+                    <mat-tab-group>
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                                <mat-icon
+                                    class="example-tab-icon me-3">admin_panel_settings</mat-icon>
+                                    <span class="fw-bolder fs-5">Comptes administrateurs</span>
+
+                            </ng-template>
+                            <div class="row mt-4">
+                                <div class="col-xxl-12 col-lg-12 col-md-12">
+                                    <div class="table-responsive">
+                                        <table
+                                            class="table table-bordered table-striped m-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th
+                                                        class="text-center">Utilisateur</th>
+
+                                                    <th
+                                                        class="text-center">Rôle</th>
+                                                    <th
+                                                        class="text-center">Statut</th>
+                                                    <th class="text-center">Date
+                                                        de
+                                                        création</th>
+                                                    <th
+                                                        class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @for (admin_compte of
+                                                list_users_accounts | paginate:
+                                                { itemsPerPage: 10, currentPage:
+                                                p }; track $index) {
+                                                <tr>
+                                                    <td>{{ $index +1 }}</td>
+                                                    <td class="text-center">
+                                                        <div
+                                                            class="d-flex align-items-center">
+                                                            <div
+                                                                [class]="admin_compte.connected == 1? 'avatar avatar-indicators avatar-online me-3': 'avatar avatar-indicators avatar-offline me-3'">
+                                                                <img
+                                                                    alt="avatar"
+                                                                    [src]="admin_compte.photo"
+                                                                    class="img-4x rounded-5 me-3" />
+                                                            </div>
+                                                            <div>
+                                                                <p
+                                                                    class="m-0 fw-bolder text-primary">
+                                                                    {{
+                                                                    admin_compte.first_name+' '+
+                                                                    admin_compte.last_name
+                                                                    }}
+                                                                </p>
+                                                                <p
+                                                                    class="m-0 fw-bolder text-red text-center">
+                                                                    {{
+                                                                    admin_compte.email
+                                                                    }}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+
+                                                    </td>
+
+                                                    <td
+                                                        class="text-center fw-bolder">
+                                                        {{ admin_compte.role }}
+                                                    </td>
+                                                    <td
+                                                        class="text-center fw-bolder">
+                                                        <mat-slide-toggle
+                                                            (click)="enableOrDisableAccount(admin_compte.slug)"
+                                                            [color]="admin_compte.status == 1?'accent':'warn'"
+                                                            [checked]="admin_compte.status == 1">
+                                                            <span
+                                                                class="text-primary fw-bolder">{{
+                                                                admin_compte.status
+                                                                ==
+                                                                1?'Actif':
+                                                                'Inactif'
+                                                                }}</span>
+                                                        </mat-slide-toggle>
+                                                    </td>
+                                                    <td
+                                                        class="text-center fw-bolder">
+                                                        {{
+                                                        admin_compte.created_at
+                                                        |
+                                                        transformDate:
+                                                        'le dd MMMM YYYY'
+                                                        }}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button mat-mini-fab
+                                                            color="primary"
+                                                            [matMenuTriggerFor]="beforeMenu">
+                                                            <mat-icon>more_vert</mat-icon>
+                                                        </button>
+                                                        <mat-menu
+                                                            #beforeMenu="matMenu"
+                                                            xPosition="before">
+                                                            <button
+                                                                mat-menu-item
+                                                                (click)="updateUsers(admin_compte)">
+                                                                <mat-icon>edit_square</mat-icon>
+                                                                Modifier
+                                                            </button>
+
+                                                            <button
+                                                                mat-menu-item
+                                                                (click)="openDeleDialog(admin_compte.slug)">
+                                                                <mat-icon>delete</mat-icon>
+                                                                Supprimer
+                                                            </button>
+                                                        </mat-menu>
+                                                    </td>
+                                                </tr>
+                                                }
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="div text-center mt-4">
+                                <pagination-controls
+                                    (pageChange)="p = $event"
+                                    previousLabel="Précédent"
+                                    nextLabel="Suivant">
+
+                                </pagination-controls>
+                            </div>
+                        </mat-tab>
+
+                        <mat-tab>
+                            <ng-template mat-tab-label >
+                                <mat-icon
+                                    class="example-tab-icon me-3">shield_person</mat-icon>
+                                    <span class="fw-bolder fs-5">Comptes employés</span>
+
+                            </ng-template>
+                            <div class="row gx-3 mt-4">
+                                <div class="col-xxl-12 col-lg-12 col-md-12">
+                                    <div class="table-responsive">
+                                        <table
+                                            class="table table-bordered table-striped m-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th
+                                                        class="text-center">Utilisateur</th>
+                                                    <th class="text-center">Type
+                                                        de compte</th>
+                                                    <th
+                                                        class="text-center">Rôle</th>
+                                                    <th
+                                                        class="text-center">Statut</th>
+                                                    <th class="text-center">Date
+                                                        de
+                                                        création</th>
+                                                    <th
+                                                        class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @for (employee_compte of
+                                                list_employees_accounts |
+                                                paginate: { itemsPerPage: 10,
+                                                currentPage: p }; track
+                                                $index) {
+                                                <tr>
+                                                    <td>{{ $index +1 }}</td>
+                                                    <td class="text-center">
+                                                        <div
+                                                            class="d-flex align-items-center">
+                                                            <div
+                                                                [class]="employee_compte.connected == 1? 'avatar avatar-indicators avatar-online me-3': 'avatar avatar-indicators avatar-offline me-3'">
+                                                                <img
+                                                                    alt="avatar"
+                                                                    [src]="employee_compte.photo"
+                                                                    class="img-4x rounded-5 me-3" />
+                                                            </div>
+                                                            <div>
+                                                                <p
+                                                                    class="m-0 fw-bolder text-primary">
+                                                                    {{
+                                                                    employee_compte.first_name+' '+
+                                                                    employee_compte.last_name
+                                                                    }}
+                                                                </p>
+                                                                <p
+                                                                    class="m-0 fw-bolder text-red text-center">
+                                                                    {{
+                                                                    employee_compte.email
+                                                                    }}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+
+                                                    </td>
+
+                                                    <td
+                                                        class="text-center fw-bolder">
+                                                        <mat-form-field
+                                                            appearance="outline">
+                                                            <mat-label>Type de
+                                                                compte<code
+                                                                    class="fs-4">*</code></mat-label>
+                                                            <mat-select
+                                                                [(value)]="employee_compte.type_accounts"
+                                                                (selectionChange)="selectTypeAccounts(employee_compte.slug,$event)">
+                                                                @for (item_type_account of list_type_accounts; track $index) {
+                                                                    <mat-option
+                                                                        [value]="item_type_account.type_accounts">{{
+                                                                        item_type_account.type
+                                                                        }}
+                                                                    </mat-option>
+                                                                }
+                                                            </mat-select>
+                                                        </mat-form-field>
+
+                                                    </td>
+                                                    <td
+                                                        class="text-center fw-bolder">
+                                                        {{ employee_compte.role
+                                                        }}
+                                                    </td>
+                                                    <td
+                                                        class="text-center fw-bolder">
+                                                        <mat-slide-toggle
+                                                            (click)="enableOrDisableEmployeeAccount(employee_compte.slug)"
+                                                            [color]="employee_compte.status == 1?'accent':'warn'"
+                                                            [checked]="employee_compte.status == 1">
+                                                            <span
+                                                                class="text-primary fw-bolder">{{
+                                                                employee_compte.status
+                                                                ==
+                                                                1?'Actif':
+                                                                'Inactif'
+                                                                }}</span>
+                                                        </mat-slide-toggle>
+                                                    </td>
+                                                    <td
+                                                        class="text-center fw-bolder">
+                                                        {{
+                                                        employee_compte.created_at
+                                                        |
+                                                        transformDate:
+                                                        'le dd MMMM YYYY'
+                                                        }}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button mat-mini-fab
+                                                            color="primary"
+                                                            [matMenuTriggerFor]="beforeMenu">
+                                                            <mat-icon>more_vert</mat-icon>
+                                                        </button>
+                                                        <mat-menu
+                                                            #beforeMenu="matMenu"
+                                                            xPosition="before">
+                                                            <button disabled="false"
+                                                                mat-menu-item
+                                                                (click)="openUpdateEmployeeAccountDialog(employee_compte)">
+                                                                <mat-icon>edit_square</mat-icon>
+                                                                Modifier
+                                                            </button>
+
+                                                            <button
+                                                                mat-menu-item
+                                                                (click)="openDeleteEmployeeAccountDialog(employee_compte.slug)">
+                                                                <mat-icon>delete</mat-icon>
+                                                                Supprimer
+                                                            </button>
+                                                        </mat-menu>
+                                                    </td>
+                                                </tr>
+                                                }
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="div text-center mt-4">
+                                <pagination-controls
+                                    (pageChange)="p = $event"
+                                    previousLabel="Précédent"
+                                    nextLabel="Suivant">
+
+                                </pagination-controls>
+                            </div>
+                        </mat-tab>
+
+                    </mat-tab-group>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ngx-spinner type="ball-circus" size="large" color="#ef8f01"
+    [fullScreen]="true">
+    <p style="color: #fff; font-size: 1.2rem"> Chargement en cours... </p>
+</ngx-spinner>

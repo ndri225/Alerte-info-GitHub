@@ -1,0 +1,38 @@
+<h1 mat-dialog-title>Nouveau document</h1>
+@if (is_loading == true) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}
+<div mat-dialog-content>
+    <div class="row mt-2">
+        <div class="col-md-12 col-lg-12">
+            <mat-form-field appearance="outline">
+                <mat-label>Le nom du document <code class="fs-4">*</code></mat-label>
+                <input [(ngModel)]="libelle_file" matInput placeholder="Le nom du document">
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-lg-12">
+            <input (change)="uploadFile($event)" class="form-control form-control-lg" id="formFileLg" type="file">
+            <label for="formFileLg" class="form-label text-danger">Joindre un document</label>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions class="d-flex justify-content-between">
+    <button mat-fab extended color="primary" mat-dialog-close>
+        <mat-icon>reply</mat-icon>
+        Annuler
+    </button>
+    @if (is_update == true) {
+        <button  mat-fab extended color="warn" (click)="updateDossiersFile()">
+            <mat-icon>update</mat-icon>
+            Modifier
+        </button>
+    }@else {}
+    <button  mat-fab extended color="warn" (click)="saveDossiersFile()">
+        <mat-icon>save</mat-icon>
+        Enregistrer
+    </button>
+</div>
+
+
+
