@@ -34,7 +34,7 @@ class AugmentationController extends Controller
                
                 'augmentations_models.*'
             )
-            ->orderBy('augmentations_models.somme', 'asc')
+            ->orderBy('augmentations_models.created_at', 'asc')
             ->get();
 
         } catch (\Throwable $e) {
@@ -124,18 +124,18 @@ class AugmentationController extends Controller
      */
     public function store(Request $request)
     {
-        //return $request->all();
+        // return $request->all();
         try {
-            if (empty($request->augmentation_motif)) :
-                return response()->json(
-                    [
-                        'code' => "302",
-                        'message' => "Le motif de l'augmentation est obligatoire 🤐"
-                    ]
-                );
-            endif;
+            // if (empty($request->augmentation_motif)) :
+            //     return response()->json(
+            //         [
+            //             'code' => "302",
+            //             'message' => "Le motif de l'augmentation est obligatoire 🤐"
+            //         ]
+            //     );
+            // endif;
 
-            if (empty($request->date_augmentation)) :
+            if (empty($request->date_augments)) :
                 return response()->json(
                     [
                         'code' => 302,
@@ -158,9 +158,10 @@ class AugmentationController extends Controller
 
             $add_augmentation->augmentation_ref = CodeGenerator::generateAugmentationCode();
 
-            $add_augmentation->augmentation_motif = $request->augmentation_motif;
+            // $add_augmentation->augmentation_motif = $request->augmentation_motif;
             $add_augmentation->somme = $request->somme;
             $add_augmentation->date_augments = $request->date_augments;
+            $add_augmentation->employe_matricule = $request->employe_matricule;
 
             $add_augmentation->slug = CodeGenerator::generateSlugCode();
 
@@ -226,18 +227,18 @@ class AugmentationController extends Controller
      */
     public function update(Request $request, string $slug)
     {
-        //return $request->all();
+        return $request->all();
 
         try {
 
-            if (empty($request->augmentation_motif)) :
-                return response()->json(
-                    [
-                        'code' => "302",
-                        'message' => "Le motif de l'augmentation est obligatoire 🤐"
-                    ]
-                );
-            endif;
+            // if (empty($request->augmentation_motif)) :
+            //     return response()->json(
+            //         [
+            //             'code' => "302",
+            //             'message' => "Le motif de l'augmentation est obligatoire 🤐"
+            //         ]
+            //     );
+            // endif;
 
             if (empty($request->date_augments)) :
                 return response()->json(
@@ -265,9 +266,11 @@ class AugmentationController extends Controller
 
             $update_augmentation->augmentation_ref = CodeGenerator::generateAugmentationCode();
 
-            $update_augmentation->augmentation_motif = $request->augmentation_motif;
+            // $update_augmentation->augmentation_motif = $request->augmentation_motif;
             $update_augmentation->somme = $request->somme;
             $update_augmentation->date_augments = $request->date_augments;
+
+            $update_augmentation->employe_matricule = $request->employe_matricule;
 
             $update_augmentation->slug = CodeGenerator::generateSlugCode();
 

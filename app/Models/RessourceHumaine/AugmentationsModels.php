@@ -12,7 +12,7 @@ class AugmentationsModels extends Model
     protected $fileable = [
         'augmentation_ref',
         'employe_matricule',
-        'augmentation_motif',
+        // 'augmentation_motif',
         'date_augments',
         'somme',
         'slug',

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('augmentations_models', function (Blueprint $table) {
             $table->id();
             $table->string('employe_matricule')->nullable();
-            $table->string('augmentation_motif')->nullable();
+            // $table->string('augmentation_motif')->nullable();
             $table->string('somme')->nullable();
             $table->date('date_augments')->nullable();
             $table->string('slug')->nullable();

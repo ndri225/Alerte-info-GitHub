@@ -124,7 +124,7 @@ Route::group(
         Route::controller(AugmentationController::class)->group(function () {
             // AUGMENTATION 💚
 
-            Route::get('get_all_permissions', 'get_all_permissions');
+            Route::get('get_all_augmentation', 'get_all_augmentation');
 
             Route::get('/get_augmentation/{employe_matricule}', 'index');
             Route::get('/customers_augmentation/{employe_matricule}', 'customers_augmentations');
